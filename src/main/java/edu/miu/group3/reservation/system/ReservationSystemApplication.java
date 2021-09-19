@@ -1,0 +1,13 @@
+package edu.miu.group3.reservation.system;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ReservationSystemApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ReservationSystemApplication.class, args);
+	}
+
+}
