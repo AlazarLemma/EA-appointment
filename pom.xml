@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>edu.miu.group3</groupId>
-	<artifactId>reservation-system</artifactId>
+	<artifactId>appointment-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>reservation-system</name>
-	<description>Reservation System</description>
+	<name>Appointment-system</name>
+	<description>Appointment System</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

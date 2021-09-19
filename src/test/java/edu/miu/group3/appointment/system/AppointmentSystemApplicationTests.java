@@ -1,10 +1,10 @@
-package edu.miu.group3.reservation.system;
+package edu.miu.group3.appointment.system;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ReservationSystemApplicationTests {
+class AppointmentSystemApplicationTests {
 
 	@Test
 	void contextLoads() {
