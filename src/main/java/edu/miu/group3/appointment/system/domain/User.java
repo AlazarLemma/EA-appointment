@@ -18,7 +18,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
     private String gender;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private Set<UserRole> userRoles = new HashSet<>();
 
     public User() {
