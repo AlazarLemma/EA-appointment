@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path= "api/v1/students")
+@RequestMapping(path= "api/v1/reservations")
 @AllArgsConstructor
 public class ReservationController {
     private final ReservationService reservationService;
@@ -18,6 +18,11 @@ public class ReservationController {
     @GetMapping
     public List<Reservation> getAllReservation(){
         return reservationService.getAllReservations();
+    }
+
+    @GetMapping(path = "{reservationId}")
+    public Reservation getReservation(@PathVariable("reservationId") Long reservationId){
+        return reservationService.getReservation(reservationId);
     }
 
     @PostMapping

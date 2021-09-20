@@ -22,6 +22,13 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
+    public Reservation getReservation(Long reservationId){
+        if(!reservationRepository.existsById(reservationId)){
+            throw new ReservationNotFoundException("Reservation with id" + reservationId + "does not exist");
+        }
+        return reservationRepository.findById(reservationId).get();
+    }
+
     public void updateReservation(Long reservationId, Reservation reservation){
         if(!reservationRepository.existsById(reservationId)){
             throw new ReservationNotFoundException("Reservation with id" + reservationId + "does not exist");
