@@ -1,8 +1,7 @@
 package edu.miu.group3.appointment.system.controller;
 
 import edu.miu.group3.appointment.system.domain.Appointment;
-import edu.miu.group3.appointment.system.domain.Reservation;
-import edu.miu.group3.appointment.system.service.AppointmentService;
+import edu.miu.group3.appointment.system.service.AppointmentServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @RequestMapping(path= "api/appointments")
 @AllArgsConstructor
 public class AppointmentController {
-    private final AppointmentService appointmentService;
+    private final AppointmentServiceImpl appointmentService;
 
     @GetMapping
     public List<Appointment> getAllAppointments(){
