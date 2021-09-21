@@ -1,11 +1,10 @@
 package edu.miu.group3.appointment.system.service;
 
 import edu.miu.group3.appointment.system.domain.Appointment;
-import edu.miu.group3.appointment.system.domain.Reservation;
+import edu.miu.group3.appointment.system.domain.User;
 import edu.miu.group3.appointment.system.repository.AppointmentRepository;
+import edu.miu.group3.appointment.system.repository.UserRepository;
 import edu.miu.group3.appointment.system.service.exception.AppointmentNotFoundException;
-import edu.miu.group3.appointment.system.service.exception.ReservationNotFoundException;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +15,22 @@ import java.util.Optional;
 @Service
 @Transactional
 public class AppointmentServiceImpl implements AppointmentService {
-
     private final AppointmentRepository appointmentRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository) {
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, UserRepository userRepository) {
         this.appointmentRepository = appointmentRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Appointment> getAllAppointments(){
         return appointmentRepository.findAll();
     }
 
-    public void addAppointment(Appointment appointment){
+    public void addAppointment(Appointment appointment, Long userId){
+        User user = userRepository.findById(userId).get();
+        appointment.setUser(user);
         appointmentRepository.save(appointment);
     }
 

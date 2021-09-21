@@ -1,9 +1,14 @@
 package edu.miu.group3.appointment.system.service;
 
+import edu.miu.group3.appointment.system.domain.Appointment;
 import edu.miu.group3.appointment.system.domain.Reservation;
+import edu.miu.group3.appointment.system.domain.User;
+import edu.miu.group3.appointment.system.repository.AppointmentRepository;
 import edu.miu.group3.appointment.system.repository.ReservationRepository;
+import edu.miu.group3.appointment.system.repository.UserRepository;
 import edu.miu.group3.appointment.system.service.exception.ReservationNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +18,18 @@ import java.util.Optional;
 @Service
 public class ReservationService {
     private final ReservationRepository reservationRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final UserRepository userRepository;
 
     public List<Reservation> getAllReservations(){
         return reservationRepository.findAll();
     }
 
-    public void addReservation(Reservation reservation){
+    public void addReservation(Reservation reservation, Long appointmentId, Long userId){
+        User user = userRepository.findById(userId).get();
+        Appointment appointment = appointmentRepository.findById(appointmentId).get();
+        reservation.setAppointment(appointment);
+        reservation.setUser(user);
         reservationRepository.save(reservation);
     }
 

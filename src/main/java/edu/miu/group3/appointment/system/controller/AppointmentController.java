@@ -24,9 +24,9 @@ public class AppointmentController {
         return appointmentService.getAppointment(appointmentId);
     }
 
-    @PostMapping
-    public void addAppointment(@Valid @RequestBody Appointment appointment){
-        appointmentService.addAppointment(appointment);
+    @PostMapping(path = "/{userId}/new")
+    public void addAppointment(@PathVariable("userId") Long userId, @Valid @RequestBody Appointment appointment){
+        appointmentService.addAppointment(appointment, userId);
     }
 
     @DeleteMapping(path = "{appointmentId}")

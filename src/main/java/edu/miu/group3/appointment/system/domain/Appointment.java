@@ -25,7 +25,11 @@ public class Appointment implements Serializable {
     @ManyToOne
     private Category category;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "appointment")
     private Set<Reservation> reservations = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_appointments_users_id"))
+    private User user;
 
 }

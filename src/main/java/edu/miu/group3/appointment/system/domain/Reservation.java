@@ -24,12 +24,11 @@ public class Reservation {
     @Column(nullable = false)
     private Status reservationStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "appointment_id", nullable = false, foreignKey = @ForeignKey(name = "fk_reservations_appointments_id"))
     private Appointment appointment;
 
-    public Reservation(LocalDateTime reservationTime, Status status, Appointment appointment){
-        this.reservationTime = reservationTime;
-        this.reservationStatus = status;
-        this.appointment = appointment;
-    }
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_reservations_users_id"))
+    private User user;
 }
