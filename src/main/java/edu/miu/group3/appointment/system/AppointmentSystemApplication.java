@@ -13,5 +13,6 @@ public class AppointmentSystemApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(AppointmentSystemApplication.class, args);
+		System.out.println(System.getenv("JAVA_HOME"));
 	}
 }

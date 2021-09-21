@@ -2,6 +2,7 @@ package edu.miu.group3.appointment.system.service;
 
 import edu.miu.group3.appointment.system.domain.Appointment;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AppointmentService {
@@ -10,4 +11,6 @@ public interface AppointmentService {
     Appointment getAppointment(Long appointmentId);
     void updateAppointment(Long appointmentId, Appointment appointment);
     void deleteAppointment(Long appointmentId);
+
+    List<Appointment> getByAppointmentTime(LocalDateTime startT, LocalDateTime endTime);
 }
