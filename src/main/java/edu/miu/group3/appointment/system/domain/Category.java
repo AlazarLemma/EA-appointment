@@ -17,7 +17,7 @@ public class Category {
     @Column(name = "title", nullable = false, length = 50)
     private String title;
 
-    @Column(name = "start-time", nullable = false)
+    @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
     @Column(name = "end_time", nullable = false)
