@@ -18,21 +18,21 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
     private String gender;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private Set<UserRole> userRoles = new HashSet<>();
+    @Column(nullable = false, unique = true)
+    private String userName;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+//    private Set<UserRole> userRoles = new HashSet<>();
 
     public User() {
 
     }
 
-    public User(String firstName, String lastName, @Email String email, String gender, UserRole userRole) {
+    public User(String firstName, String lastName, @Email String email, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.gender = gender;
-        userRoles =new HashSet<>();
-        this.userRoles.add(userRole);
     }
 
     public long getId() {
