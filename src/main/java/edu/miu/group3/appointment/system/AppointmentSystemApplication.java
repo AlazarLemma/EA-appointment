@@ -5,13 +5,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableJms
 @SpringBootApplication
 @EnableScheduling
+@EnableSwagger2
 public class AppointmentSystemApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(AppointmentSystemApplication.class, args);
+		SpringApplication.run(AppointmentSystemApplication.class, args);
 	}
 }
