@@ -1,6 +1,8 @@
 package edu.miu.group3.appointment.system.integration.email;
 
+import edu.miu.group3.appointment.system.domain.AppointmentReminder;
+
 public interface EmailService {
 
-    EmailResponse sendEmail(EmailRequest request);
+    void sendEmail(AppointmentReminder appointmentReminder);
 }
