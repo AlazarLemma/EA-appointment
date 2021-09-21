@@ -1,0 +1,54 @@
+server:
+    port: 8181
+
+spring:
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: 
+        password:
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
+
+    config:
+        import: optional:file:.env[.properties]
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/Auth
+        username: root
+        password: 
+    jpa:
+        hibernate.ddl-auto: update
+        generate-ddl: true
+        show-sql: true
+    activemq:
+        broker-url: tcp://localhost:61616
+        user: admin
+        password: admin
+        packages:
+            trust-all: true
+    kafka:
+        bootstrap-servers: localhost:9092
+        consumer:
+            auto-offset-reset: earliest
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+            properties:
+                spring.json.trusted.packages: '*'
+            group-id: gid-appointment
+        producer:
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
+#email reminder configuration and #scheduler
+reminder:
+    appointment:
+        time.in.minutes: 1400, 2880
+        sender.email: appointment@gmail.com
+    scheduler:
+        fixedDelay.in.millisecond: 60000

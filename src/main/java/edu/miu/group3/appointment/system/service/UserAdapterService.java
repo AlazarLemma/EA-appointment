@@ -1,5 +1,7 @@
 package edu.miu.group3.appointment.system.service;
 
+import edu.miu.group3.appointment.system.domain.User;
+import edu.miu.group3.appointment.system.domain.events.UserRegisteredEvent;
 import edu.miu.group3.appointment.system.service.dto.AuthUserDetails;
 import edu.miu.group3.appointment.system.service.dto.AuthUserSubject;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,5 +24,9 @@ public class UserAdapterService {
                 subject.getIsActive(),
                 grantedAuthorities
         );
+    }
+
+    public User fromUserRegisteredEvent(UserRegisteredEvent event) {
+        return new User(event.getUsername(), event.getUuid(), event.getIsActive(), event.getRoles());
     }
 }

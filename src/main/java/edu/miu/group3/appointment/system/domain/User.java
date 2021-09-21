@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 @Entity
 @ToString
@@ -27,6 +28,10 @@ public class User {
     private String username;
     
     @NonNull
+    @Column(unique = true)
+    private String uuid;
+
+    @NonNull
     private boolean active;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
@@ -34,4 +39,8 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<Reservation> reservations = new HashSet<>();
+
+    @NonNull
+    @ElementCollection
+    private List<String> roles;
 }
