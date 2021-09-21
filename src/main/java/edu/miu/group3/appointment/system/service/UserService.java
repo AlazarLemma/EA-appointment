@@ -3,6 +3,7 @@ package edu.miu.group3.appointment.system.service;
 import edu.miu.group3.appointment.system.domain.User;
 import edu.miu.group3.appointment.system.domain.events.UserRegisteredEvent;
 import edu.miu.group3.appointment.system.repository.UserRepository;
+import edu.miu.group3.appointment.system.service.util.CustomLoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ public class UserService {
 
     @Autowired
     UserAdapterService adapterService;
+
+    @Autowired
+    private CustomLoggerService loggerService;
 
     public void save(User user) {
         userRepository.save(user);
@@ -43,7 +47,11 @@ public class UserService {
     }
 
     public void handleUserRegistered(UserRegisteredEvent event) {
+        loggerService.log("User registered event received : " + event);
+
         User user = adapterService.fromUserRegisteredEvent(event);
         userRepository.save(user);
+
+        loggerService.log("User registered : " + user);
     }
 }
