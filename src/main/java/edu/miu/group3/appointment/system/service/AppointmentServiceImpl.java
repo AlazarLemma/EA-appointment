@@ -1,8 +1,10 @@
 package edu.miu.group3.appointment.system.service;
 
 import edu.miu.group3.appointment.system.domain.Appointment;
+import edu.miu.group3.appointment.system.domain.Category;
 import edu.miu.group3.appointment.system.domain.User;
 import edu.miu.group3.appointment.system.repository.AppointmentRepository;
+import edu.miu.group3.appointment.system.repository.CategoryRepository;
 import edu.miu.group3.appointment.system.repository.UserRepository;
 import edu.miu.group3.appointment.system.service.exception.AppointmentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +19,26 @@ import java.util.Optional;
 public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository; 
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, UserRepository userRepository) {
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, 
+                                  UserRepository userRepository,
+                                  CategoryRepository categoryRepository) {
         this.appointmentRepository = appointmentRepository;
         this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public List<Appointment> getAllAppointments(){
         return appointmentRepository.findAll();
     }
 
-    public void addAppointment(Appointment appointment, Long userId){
+    public void addAppointment(Appointment appointment, Long userId, Long categoryId){
         User user = userRepository.findById(userId).get();
+        Category category = categoryRepository.findById(categoryId).get();
         appointment.setUser(user);
+        appointment.setCategory(category);
         appointmentRepository.save(appointment);
     }
 

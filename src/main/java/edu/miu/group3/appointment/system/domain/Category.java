@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Category")
@@ -22,4 +24,7 @@ public class Category {
 
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "category")
+    private Set<Appointment> appointments = new HashSet<>();
 }
