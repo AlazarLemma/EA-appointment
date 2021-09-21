@@ -45,8 +45,8 @@ public class AppointmentSchedule {
 
         for(Integer minutes : reminderMinutes){
 
-            LocalDateTime startT = currentTime.minusMinutes(minutes);
-            LocalDateTime endT = currentTime.plusMinutes(1);
+            LocalDateTime startT = currentTime.plusMinutes(minutes);
+            LocalDateTime endT = startT.plusMinutes(1);
 
             List<Appointment> appointments = appointmentService.getByAppointmentTime(startT, endT);
 
