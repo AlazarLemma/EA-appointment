@@ -25,7 +25,7 @@ public class ReservationController {
         return reservationService.getReservation(reservationId);
     }
 
-    @PostMapping("/{userId}/{appointmentId}/reservation")
+    @PostMapping("/{userId}/{appointmentId}")
     public void addReservation(@PathVariable("userId") Long userId,
                                @PathVariable("appointmentId")Long appointmentId,
                                @Valid @RequestBody Reservation reservation){
