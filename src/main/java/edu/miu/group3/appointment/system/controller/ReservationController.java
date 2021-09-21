@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path= "api/v1/reservations")
+@RequestMapping(path= "api/reservations")
 @AllArgsConstructor
 public class ReservationController {
     private final ReservationService reservationService;

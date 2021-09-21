@@ -1,10 +1,13 @@
 package edu.miu.group3.appointment.system.service;
 
-import org.springframework.stereotype.Service;
+import edu.miu.group3.appointment.system.domain.Appointment;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
-@Service
-@Transactional
-public class AppointmentService {
+public interface AppointmentService {
+    List<Appointment> getAllAppointments();
+    void addAppointment(Appointment appointment);
+    Appointment getAppointment(Long appointmentId);
+    void updateAppointment(Long appointmentId, Appointment appointment);
+    void deleteAppointment(Long appointmentId);
 }
