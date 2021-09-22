@@ -1,41 +1,46 @@
 package edu.miu.group3.appointment.system.domain;
 
 import lombok.*;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 @Entity
 @ToString
 @Getter
 @Setter
 @EqualsAndHashCode
-@NoArgsConstructor
 @AllArgsConstructor
-@Table
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private long id;
-    @Column(nullable = false)
-    private String firstName;
-    @Column(nullable = false)
-    private String lastName;
-    @Email
-    @Column(nullable = false, unique = true)
-    private String email;
-    private String gender;
-    @Column(nullable = false, unique = true)
-    private String userName;
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "user_id")
-//    private Set<UserRole> userRoles = new HashSet<>();
+
+    @NonNull
+    @Column(unique = true)
+    private String username;
+    
+    @NonNull
+    @Column(unique = true)
+    private String uuid;
+
+    @NonNull
+    private boolean active;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<Appointment> appointments = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<Reservation> reservations = new HashSet<>();
+
+    @NonNull
+    @ElementCollection
+    private List<String> roles;
 }

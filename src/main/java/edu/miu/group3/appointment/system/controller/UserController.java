@@ -2,9 +2,11 @@ package edu.miu.group3.appointment.system.controller;
 
 import edu.miu.group3.appointment.system.domain.User;
 import edu.miu.group3.appointment.system.service.UserService;
+import edu.miu.group3.appointment.system.service.dto.AuthUserSubject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -12,6 +14,13 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @GetMapping("/client")
+    public String client(HttpServletRequest request) {
+        AuthUserSubject user = (AuthUserSubject) request.getAttribute("user");
+        System.out.println(user);
+        return "client";
+    }
 
     @PostMapping()
     public void createUser(@RequestBody User user) {
