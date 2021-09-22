@@ -34,10 +34,10 @@ public class User {
     @NonNull
     private boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @OneToMany
     private Set<Appointment> appointments = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @OneToMany
     private Set<Reservation> reservations = new HashSet<>();
 
     @NonNull

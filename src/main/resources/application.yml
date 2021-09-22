@@ -7,7 +7,7 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: 
+        username:
         password:
         protocol: smtp
         tls: true
@@ -23,9 +23,9 @@ spring:
         driverClassName: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://localhost:3306/appointmentDb
         username: root
-        password: 
+        password: root@1927
     jpa:
-        hibernate.ddl-auto: update
+        hibernate.ddl-auto: create-drop
         generate-ddl: true
         show-sql: true
     activemq:
@@ -54,7 +54,7 @@ reminder:
         time.in.minutes: 1400, 2880
         sender.email: appointment@gmail.com
     scheduler:
-        fixedDelay.in.millisecond: 60000
+        fixedDelay.in.millisecond: 600000
 
 eureka:
     client:

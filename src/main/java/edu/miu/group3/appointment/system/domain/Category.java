@@ -25,6 +25,6 @@ public class Category {
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "category")
+    @OneToMany
     private Set<Appointment> appointments = new HashSet<>();
 }

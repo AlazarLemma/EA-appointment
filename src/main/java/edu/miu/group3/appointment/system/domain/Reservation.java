@@ -24,11 +24,9 @@ public class Reservation {
     @Column(nullable = false)
     private Status reservationStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "appointment_id")
+    @ManyToOne
     private Appointment appointment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne
     private User user;
 }
