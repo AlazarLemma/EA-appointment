@@ -1,9 +1,9 @@
 package edu.miu.group3.appointment.system.integration.Job;
 
-import edu.miu.group3.appointment.system.domain.Appointment;
+import edu.miu.group3.appointment.system.domain.Reservation;
 import edu.miu.group3.appointment.system.integration.email.EmailTemplate;
 import edu.miu.group3.appointment.system.integration.email.Type;
-import edu.miu.group3.appointment.system.service.AppointmentService;
+import edu.miu.group3.appointment.system.service.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class AppointmentSchedule {
 
     private final JmsTemplate jmsTemplate;
 
-    private final AppointmentService appointmentService;
+    private final ReservationService reservationService;
 
     @Value("${reminder.appointment.time.in.minutes}")
     private List<Integer> reminderMinutes;
@@ -32,9 +32,9 @@ public class AppointmentSchedule {
     private String senderEmail;
 
     @Autowired
-    public AppointmentSchedule(JmsTemplate jmsTemplate, AppointmentService appointmentService) {
+    public AppointmentSchedule(JmsTemplate jmsTemplate, ReservationService reservationService) {
         this.jmsTemplate = jmsTemplate;
-        this.appointmentService = appointmentService;
+        this.reservationService = reservationService;
     }
 
 
@@ -48,16 +48,16 @@ public class AppointmentSchedule {
             LocalDateTime startT = currentTime.plusMinutes(minutes);
             LocalDateTime endT = startT.plusMinutes(1);
 
-            List<Appointment> appointments = appointmentService.getByAppointmentTime(startT, endT);
+            List<Reservation> reservations = reservationService.getConfirmedReservations(startT, endT);
 
-            for(Appointment a: appointments){
-                sendAppointmentReminder(a, minutes);
+            for(Reservation reservation: reservations){
+                sendAppointmentReminder(reservation, minutes);
             }
         }
 
     }
 
-    private void sendAppointmentReminder(Appointment appointment, int minutes){
+    private void sendAppointmentReminder(Reservation reservation, int minutes){
         String emailBody = "";
 
         if(minutes > 60){
@@ -66,9 +66,7 @@ public class AppointmentSchedule {
             emailBody = minutes +" minute remaining for your appointment";
         }
 
-        // todo: finish me
-//        EmailTemplate emailTemplate = new EmailTemplate(senderEmail, appointment.getUser().getEmail(), emailBody);
-        EmailTemplate emailTemplate = new EmailTemplate(Type.APPOINTMENT_REMINDER.getDefaultSubject(), senderEmail, "yordan.desta@gmail.com", emailBody, Type.APPOINTMENT_REMINDER);
+        EmailTemplate emailTemplate = new EmailTemplate(Type.APPOINTMENT_REMINDER.getDefaultSubject(), senderEmail, reservation.getUser().getUsername(), emailBody, Type.APPOINTMENT_REMINDER);
 
         logger.info("added reminder to the queue");
 

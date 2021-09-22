@@ -65,8 +65,4 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointmentRepository.deleteById(appointmentId);
     }
 
-    @Override
-    public List<Appointment> getByAppointmentTime(LocalDateTime startT, LocalDateTime endTime) {
-        return appointmentRepository.findByAppointmentTime(startT, endTime);
-    }
 }

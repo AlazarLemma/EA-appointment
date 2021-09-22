@@ -11,6 +11,4 @@ public interface AppointmentService {
     Appointment getAppointment(Long appointmentId);
     void updateAppointment(Long appointmentId, Appointment appointment);
     void deleteAppointment(Long appointmentId);
-
-    List<Appointment> getByAppointmentTime(LocalDateTime startT, LocalDateTime endTime);
 }
