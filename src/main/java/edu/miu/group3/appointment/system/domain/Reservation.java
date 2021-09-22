@@ -27,7 +27,7 @@ public class Reservation {
     @ManyToOne
     private Appointment appointment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 }
