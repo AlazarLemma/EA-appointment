@@ -7,7 +7,7 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username:
+        username: yordan.dev@gmail.com
         password:
         protocol: smtp
         tls: true
@@ -54,7 +54,7 @@ reminder:
         time.in.minutes: 1400, 2880
         sender.email: appointment@gmail.com
     scheduler:
-        fixedDelay.in.millisecond: 600000
+        fixedDelay.in.millisecond: 60000
 
 eureka:
     client:
