@@ -20,3 +20,14 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Agent.BuildDirectory)'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'EA%20Headless%20Appointment%20System'
+    publishLocation: 'Container'
