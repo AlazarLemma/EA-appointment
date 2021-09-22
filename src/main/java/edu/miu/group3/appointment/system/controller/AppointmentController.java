@@ -51,10 +51,7 @@ public class AppointmentController {
                                             @PathVariable("categoryId") Long categoryId,
                                             @Valid @RequestBody Appointment appointment){
         AuthUserSubject user = (AuthUserSubject) request.getAttribute("user");
-<<<<<<< HEAD
-=======
 
->>>>>>> 49a0df5 (created modified repo and service layer for appointment, modified the email service and contextualized the appointment controller)
         User dbUser = userService.findByUUID(user.getUuid());
         if (dbUser == null) {
             loggerService.log("User not found " + user);
