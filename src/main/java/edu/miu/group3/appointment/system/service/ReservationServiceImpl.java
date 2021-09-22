@@ -25,12 +25,14 @@ public class ReservationServiceImpl implements ReservationService{
         return reservationRepository.findAll();
     }
 
-    public void addReservation(Reservation reservation, Long appointmentId, Long userId){
-        User user = userRepository.findById(userId).get();
-        Appointment appointment = appointmentRepository.findById(appointmentId).get();
-        reservation.setAppointment(appointment);
-        reservation.setUser(user);
-        reservationRepository.save(reservation);
+    public Reservation addReservation(Reservation reservation, Long appointmentId, Long userId){
+        if(userRepository.existsById(userId) && appointmentRepository.existsById(appointmentId)){
+            User user = userRepository.findById(userId).get();
+            reservation.setUser(user);
+            Appointment appointment = appointmentRepository.findById(appointmentId).get();
+            reservation.setAppointment(appointment);
+        }
+        return reservationRepository.save(reservation);
     }
 
     public Reservation getReservation(Long reservationId){
