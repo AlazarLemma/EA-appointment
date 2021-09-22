@@ -24,4 +24,12 @@ public class Category {
 
     @OneToMany
     private Set<Appointment> appointments = new HashSet<>();
+
+
+    @PrePersist
+    public void prePersist() {
+        if (this.defaultSessionLength == null) {
+            this.defaultSessionLength = 30;
+        }
+    }
 }
