@@ -28,6 +28,5 @@ public class Reservation {
     private Appointment appointment;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 }

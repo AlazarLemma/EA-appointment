@@ -29,13 +29,15 @@ public class ReservationController {
     private final CustomLoggerService loggerService;
 
     @GetMapping
-    public List<Reservation> getAllReservation(){
-        return reservationService.getAllReservations();
+    public ResponseEntity<List<Reservation>> getAllReservation(){
+        List<Reservation> result = reservationService.getAllReservations();
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping(path = "{reservationId}")
-    public Reservation getReservation(@PathVariable("reservationId") Long reservationId){
-        return reservationService.getReservation(reservationId);
+    public ResponseEntity<?> getReservation(@PathVariable("reservationId") Long reservationId){
+        Reservation result = reservationService.getReservation(reservationId);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("{appointmentId}")
@@ -43,8 +45,6 @@ public class ReservationController {
                                @PathVariable("appointmentId")Long appointmentId,
                                @Valid @RequestBody Reservation reservation){
         AuthUserSubject user = (AuthUserSubject) request.getAttribute("user");
-//        System.out.println("test" + user.getUuid());
-//        System.out.println("test2" + userService.findByUUID(user.getUuid()));
         User dbUser = userService.findByUUID(user.getUuid());
         if (dbUser == null) {
             loggerService.log("User not found " + user);
