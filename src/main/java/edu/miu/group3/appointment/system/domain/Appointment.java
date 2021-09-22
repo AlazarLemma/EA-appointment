@@ -25,7 +25,7 @@ public class Appointment implements Serializable {
     @OneToMany
     private Set<Reservation> reservations = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "provider_id")
     private User provider;
 

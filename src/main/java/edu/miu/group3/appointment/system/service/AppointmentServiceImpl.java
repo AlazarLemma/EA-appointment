@@ -92,13 +92,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         //accept the new one
         Reservation reservation = reservationService.getAppointmentReservation(appointment, reservationId);
-        reservationService.updateReservation(reservationId, reservation);
-        emailService.sendReservationConfirmationMail(reservation);
-
+        if(reservation != null){
+            reservationService.updateReservation(reservationId, reservation);
+            emailService.sendReservationConfirmationMail(reservation);
+        }
+        
         //cancel and old one
         Reservation oldReservation = reservationService.getAppointmentReservation(appointment, reservationId, ReservationStatus.ACCEPTED);
-        reservationService.updateReservation(oldReservation.getId(), oldReservation);
-        emailService.sendReservationCancelMail(oldReservation);
+
+        if(oldReservation != null){
+            reservationService.updateReservation(oldReservation.getId(), oldReservation);
+            emailService.sendReservationCancelMail(oldReservation);
+        }
 
         return reservation;
     }
