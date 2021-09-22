@@ -40,6 +40,6 @@ target
 secrets.yml
 .gradletasknamecache
 .sts4-cache
-.env
+.env*
 /src/main/resources/public_key.pem
 /src/main/resources/private_key.pem
