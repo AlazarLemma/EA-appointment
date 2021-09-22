@@ -25,9 +25,11 @@ public class ReservationController {
         return reservationService.getReservation(reservationId);
     }
 
-    @PostMapping
-    public void addReservation(@Valid @RequestBody Reservation reservation){
-        reservationService.addReservation(reservation);
+    @PostMapping("/{userId}/{appointmentId}")
+    public void addReservation(@PathVariable("userId") Long userId,
+                               @PathVariable("appointmentId")Long appointmentId,
+                               @Valid @RequestBody Reservation reservation){
+        reservationService.addReservation(reservation, appointmentId, userId);
     }
 
     @DeleteMapping(path = "{reservationId}")
