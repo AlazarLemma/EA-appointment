@@ -1,9 +1,13 @@
 package edu.miu.group3.appointment.system.controller;
 
 import edu.miu.group3.appointment.system.domain.Category;
+import edu.miu.group3.appointment.system.service.CategoryAdapterService;
 import edu.miu.group3.appointment.system.service.CategoryService;
 
+import edu.miu.group3.appointment.system.service.dto.CategoriesDto;
+import edu.miu.group3.appointment.system.service.dto.CategoryDto;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +21,15 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService categoryService;
 
+    @Autowired
+    private CategoryAdapterService adapterService;
+
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories(){
+    public ResponseEntity<CategoriesDto> getAllCategories(){
         List<Category> result = categoryService.getAllCategories();
-        return ResponseEntity.ok(result);
+        CategoriesDto dto = adapterService.fromCategoriesToDto(result);
+
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping(path = "{categoryId}")
@@ -30,9 +39,12 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addCategory(@Valid @RequestBody Category category){
+    public ResponseEntity<CategoryDto> addCategory(@Valid @RequestBody CategoryDto dto){
+        Category category = adapterService.fromDto(dto);
         Category result = categoryService.addCategory(category);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+
+
+        return new ResponseEntity<CategoryDto>(adapterService.fromCategory(result), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "{categoryId}")
