@@ -7,8 +7,6 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: yordan.dev@gmail.com
-        password:
         protocol: smtp
         tls: true
         properties.mail.smtp:
@@ -30,8 +28,6 @@ spring:
         show-sql: true
     activemq:
         broker-url: tcp://localhost:61616
-        user: admin
-        password: admin
         packages:
             trust-all: true
     kafka:
@@ -52,7 +48,6 @@ spring:
 reminder:
     appointment:
         time.in.minutes: 1400, 2880
-        sender.email: appointment@gmail.com
     scheduler:
         fixedDelay.in.millisecond: 60000
 
