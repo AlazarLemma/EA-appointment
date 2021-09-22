@@ -51,7 +51,7 @@ public class AppointmentController {
         }
 
         Appointment result = appointmentService.addAppointment(appointment, dbUser.getId(), categoryId);
-        return new ResponseEntity<>("result", HttpStatus.CREATED);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "{appointmentId}")
