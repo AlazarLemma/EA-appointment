@@ -10,52 +10,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class UserService {
-    @Autowired
-    UserRepository userRepository;
+public interface UserService {
+    public void save(User user);
+    public List<User> findAll();
+    public User findById(long userid);
+    public User update(User user);
+    public void delete(long userId);
+    public void handleUserRegistered(UserRegisteredEvent event);
+    public User findByUUID(String uuid);
 
-    @Autowired
-    UserAdapterService adapterService;
-
-    @Autowired
-    private CustomLoggerService loggerService;
-
-    public void save(User user) {
-        userRepository.save(user);
-    }
-
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    public User findById(long userid) {
-        Optional<User> user = userRepository.findById(userid);
-        return user.isPresent() ? user.get() : null;
-    }
-
-    public User update(User user) {
-        return userRepository.save(user);
-    }
-
-    public void delete(long userId) {
-        User oldUser = findById(userId);
-        if (oldUser == null) {
-            return;
-        }
-        userRepository.deleteById(userId);
-    }
-
-    public void handleUserRegistered(UserRegisteredEvent event) {
-        loggerService.log("User registered event received : " + event);
-
-        User user = adapterService.fromUserRegisteredEvent(event);
-        userRepository.save(user);
-
-        loggerService.log("User registered : " + user);
-    }
-
-    public User findByUUID(String uuid) {
-        return userRepository.findByUuid(uuid).orElse(null);
-    }
 }
