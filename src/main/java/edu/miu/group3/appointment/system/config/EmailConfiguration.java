@@ -23,7 +23,7 @@ public class EmailConfiguration {
     @Value("${spring.mail.password}")
     private String mailServerPassword;
 
-    @Value("${mail.smtp.debug}")
+    @Value("${spring.mail.smtp.debug}")
     private String smtpDebug;
 
     @Value("${spring.mail.properties.mail.smtp.auth}")
