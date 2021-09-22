@@ -1,6 +1,9 @@
 package edu.miu.group3.appointment.system.integration.email;
 
-public interface EmailService {
+import edu.miu.group3.appointment.system.domain.Reservation;
 
-    void sendEmail(EmailTemplate appointmentReminder);
+public interface EmailService {
+    void sendReservationConfirmationMail(Reservation reservation);
+    void sendReservationCancelMail(Reservation r);
+    void sendAppointmentReminderMail(Reservation reservation, int minute);
 }

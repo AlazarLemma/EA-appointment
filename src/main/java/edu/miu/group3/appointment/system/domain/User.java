@@ -34,10 +34,17 @@ public class User {
     @NonNull
     private boolean active;
 
+<<<<<<< HEAD
     @OneToMany
     private Set<Appointment> appointments = new HashSet<>();
 
     @OneToMany
+=======
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "provider")
+    private Set<Appointment> appointments = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
+>>>>>>> 49a0df5 (created modified repo and service layer for appointment, modified the email service and contextualized the appointment controller)
     private Set<Reservation> reservations = new HashSet<>();
 
     @NonNull

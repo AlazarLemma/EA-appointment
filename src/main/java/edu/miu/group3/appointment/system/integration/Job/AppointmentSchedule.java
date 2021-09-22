@@ -1,8 +1,7 @@
 package edu.miu.group3.appointment.system.integration.Job;
 
 import edu.miu.group3.appointment.system.domain.Reservation;
-import edu.miu.group3.appointment.system.integration.email.EmailTemplate;
-import edu.miu.group3.appointment.system.integration.email.Type;
+import edu.miu.group3.appointment.system.integration.email.EmailService;
 import edu.miu.group3.appointment.system.service.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,19 +20,17 @@ public class AppointmentSchedule {
 
     private final Logger logger = LoggerFactory.getLogger(AppointmentSchedule.class.getSimpleName());
 
-    private final JmsTemplate jmsTemplate;
-
     private final ReservationService reservationService;
+
+    private final EmailService emailService;
 
     @Value("${reminder.appointment.time.in.minutes}")
     private List<Integer> reminderMinutes;
 
-    @Value("${spring.mail.username}")
-    private String senderEmail;
 
     @Autowired
-    public AppointmentSchedule(JmsTemplate jmsTemplate, ReservationService reservationService) {
-        this.jmsTemplate = jmsTemplate;
+    public AppointmentSchedule(ReservationService reservationService, EmailService emailService) {
+        this.emailService = emailService;
         this.reservationService = reservationService;
     }
 
@@ -51,25 +48,10 @@ public class AppointmentSchedule {
             List<Reservation> reservations = reservationService.getConfirmedReservations(startT, endT);
 
             for(Reservation reservation: reservations){
-                sendAppointmentReminder(reservation, minutes);
+                emailService.sendAppointmentReminderMail(reservation, minutes);
             }
         }
 
     }
 
-    private void sendAppointmentReminder(Reservation reservation, int minutes){
-        String emailBody = "";
-
-        if(minutes > 60){
-            emailBody = Math.floor(minutes/60)+ " hours remaining for your appointment";
-        } else{
-            emailBody = minutes +" minute remaining for your appointment";
-        }
-
-        EmailTemplate emailTemplate = new EmailTemplate(Type.APPOINTMENT_REMINDER.getDefaultSubject(), senderEmail, reservation.getUser().getUsername(), emailBody, Type.APPOINTMENT_REMINDER);
-
-        logger.info("added reminder to the queue");
-
-        jmsTemplate.convertAndSend("mailbox", emailTemplate);
-    }
 }

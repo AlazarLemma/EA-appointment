@@ -25,8 +25,14 @@ public class Appointment implements Serializable {
     @OneToMany
     private Set<Reservation> reservations = new HashSet<>();
 
+<<<<<<< HEAD
     @ManyToOne
     private User user;
+=======
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id")
+    private User provider;
+>>>>>>> 49a0df5 (created modified repo and service layer for appointment, modified the email service and contextualized the appointment controller)
 
     @ManyToOne
     private Category category;

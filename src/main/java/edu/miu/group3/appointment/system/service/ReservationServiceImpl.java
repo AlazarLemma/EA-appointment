@@ -2,6 +2,7 @@ package edu.miu.group3.appointment.system.service;
 
 import edu.miu.group3.appointment.system.domain.Appointment;
 import edu.miu.group3.appointment.system.domain.Reservation;
+import edu.miu.group3.appointment.system.domain.ReservationStatus;
 import edu.miu.group3.appointment.system.domain.User;
 import edu.miu.group3.appointment.system.repository.AppointmentRepository;
 import edu.miu.group3.appointment.system.repository.ReservationRepository;
@@ -28,7 +29,7 @@ public class ReservationServiceImpl implements ReservationService{
     public Reservation addReservation(Reservation reservation, Long appointmentId, Long userId){
         if(userRepository.existsById(userId) && appointmentRepository.existsById(appointmentId)){
             User user = userRepository.findById(userId).get();
-            reservation.setUser(user);
+            reservation.setClient(user);
             Appointment appointment = appointmentRepository.findById(appointmentId).get();
             reservation.setAppointment(appointment);
         }
@@ -64,4 +65,15 @@ public class ReservationServiceImpl implements ReservationService{
     public List<Reservation> getConfirmedReservations(LocalDateTime startT, LocalDateTime endTime) {
         return reservationRepository.findConfirmedReservationsByTime(startT, endTime);
     }
+
+    @Override
+    public Reservation getAppointmentReservation(Appointment appointment, Long reservationId, ReservationStatus status) {
+        return reservationRepository.findByIdAppointmentAndStatus(reservationId, appointment, status);
+    }
+
+    @Override
+    public Reservation getAppointmentReservation(Appointment appointment, Long reservationId) {
+        return reservationRepository.findByIdAndAppointment(reservationId, appointment);
+    }
+
 }
