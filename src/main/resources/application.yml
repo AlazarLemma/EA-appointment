@@ -8,7 +8,7 @@ spring:
         host: smtp.gmail.com
         port: 587
         username: yordan.dev@gmail.com
-        password: P@ssw0rd2314_acr6
+        password:
         protocol: smtp
         tls: true
         properties.mail.smtp:
@@ -23,7 +23,7 @@ spring:
         driverClassName: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://localhost:3306/appointmentDb
         username: root
-        password: P@ssw0rd2314
+        password:
     jpa:
         hibernate.ddl-auto: create-drop
         generate-ddl: true
