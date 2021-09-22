@@ -1,14 +1,12 @@
 package edu.miu.group3.appointment.system.domain;
 
 import lombok.*;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @ToString
@@ -32,15 +30,16 @@ public class User {
     private String uuid;
 
     @NonNull
-    private boolean active;
+    private boolean isActive;
 
-    @OneToMany
-    private Set<Appointment> appointments = new HashSet<>();
-
-    @OneToMany
-    private Set<Reservation> reservations = new HashSet<>();
-
-    @NonNull
     @ElementCollection
-    private List<String> roles;
+    private List<String> roles = new ArrayList<>();
+
+    public User(String username, String uuid, Boolean isActive, List<String> roles) {
+
+        this.username = username;
+        this.uuid = uuid;
+        this.isActive = isActive;
+        this.roles = roles;
+    }
 }

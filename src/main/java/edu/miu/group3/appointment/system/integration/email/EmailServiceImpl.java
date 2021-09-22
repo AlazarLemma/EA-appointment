@@ -1,9 +1,12 @@
 package edu.miu.group3.appointment.system.integration.email;
 
+import edu.miu.group3.appointment.system.domain.Reservation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -18,17 +21,22 @@ public class EmailServiceImpl implements EmailService{
 
     private final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class.getSimpleName());
 
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-    private EmailRepository emailRepository;
+    private final EmailRepository emailRepository;
+
+    private final JmsTemplate jmsTemplate;
+
+    @Value("${spring.mail.username}")
+    private String senderEmail;
 
     @Autowired
-    public EmailServiceImpl(JavaMailSender mailSender, EmailRepository emailRepository) {
+    public EmailServiceImpl(JavaMailSender mailSender, EmailRepository emailRepository, JmsTemplate jmsTemplate) {
         this.mailSender = mailSender;
         this.emailRepository = emailRepository;
+        this.jmsTemplate = jmsTemplate;
     }
 
-    @Override
     @JmsListener(destination = "mailbox", containerFactory = "mailboxFactory")
     public void sendEmail(EmailTemplate emailTemplate) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -57,5 +65,47 @@ public class EmailServiceImpl implements EmailService{
             logger.error(e.getLocalizedMessage());
         }
 
+    }
+
+    @Override
+    public void sendReservationConfirmationMail(Reservation reservation) {
+        String emailBody = "Your reservation has been confirmed";
+
+        EmailTemplate emailTemplate = new EmailTemplate(EmailType.RESERVATION_CONFIRMATION.getDefaultSubject(),
+                senderEmail, reservation.getClient().getUsername(),
+                emailBody,
+                EmailType.APPOINTMENT_REMINDER);
+
+        logger.info("added reminder to the queue");
+
+        jmsTemplate.convertAndSend("mailbox", emailTemplate);
+    }
+
+    @Override
+    public void sendReservationCancelMail(Reservation reservation) {
+        String emailBody = "Your reservation has been canceled";
+        EmailTemplate emailTemplate = new EmailTemplate(EmailType.RESERVATION_CANCELED.getDefaultSubject(),
+                senderEmail, reservation.getClient().getUsername(),
+                emailBody,
+                EmailType.APPOINTMENT_REMINDER);
+
+        jmsTemplate.convertAndSend("mailbox", emailTemplate);
+    }
+
+    @Override
+    public void sendAppointmentReminderMail(Reservation reservation, int minutes) {
+        String emailBody;
+
+        if(minutes > 60){
+            emailBody = Math.floor(minutes/60)+ " hours remaining for your appointment";
+        } else{
+            emailBody = minutes +" minute remaining for your appointment";
+        }
+
+        EmailTemplate emailTemplate = new EmailTemplate(EmailType.APPOINTMENT_REMINDER.getDefaultSubject(), senderEmail, reservation.getClient().getUsername(), emailBody, EmailType.APPOINTMENT_REMINDER);
+
+        logger.info("added reminder to the queue");
+
+        jmsTemplate.convertAndSend("mailbox", emailTemplate);
     }
 }

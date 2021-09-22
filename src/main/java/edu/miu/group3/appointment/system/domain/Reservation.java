@@ -22,11 +22,12 @@ public class Reservation {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Status reservationStatus;
+    private ReservationStatus reservationStatus;
 
     @ManyToOne
     private Appointment appointment;
 
-    @ManyToOne
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private User client;
 }

@@ -30,12 +30,14 @@ public class EmailTemplate implements Serializable {
     private String subject;
 
     @Column (name = "email_type")
-    private Type emailType;
+    @Enumerated(EnumType.STRING)
+    private EmailType emailType;
 
     @Column (name = "email_status")
+    @Enumerated(EnumType.STRING)
     private EmailStatus status;
 
-    public EmailTemplate(String subject, String from, String to, String body, Type emailType){
+    public EmailTemplate(String subject, String from, String to, String body, EmailType emailType){
         this.subject = subject;
         this.from = from;
         this.to = to;
