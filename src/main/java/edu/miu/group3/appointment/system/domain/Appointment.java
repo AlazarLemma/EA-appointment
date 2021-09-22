@@ -22,15 +22,15 @@ public class Appointment implements Serializable {
     @Column(name = "time")
     private LocalDateTime appointmentTime;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "appointment")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "appointment")
     private Set<Reservation> reservations = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_appointments_users_id"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(name = "fk_appointments_categories_id"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
 
 }

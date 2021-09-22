@@ -35,12 +35,17 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentRepository.findAll();
     }
 
-    public void addAppointment(Appointment appointment, Long userId, Long categoryId){
-        User user = userRepository.findById(userId).get();
-        Category category = categoryRepository.findById(categoryId).get();
-        appointment.setUser(user);
-        appointment.setCategory(category);
-        appointmentRepository.save(appointment);
+    public Appointment addAppointment(Appointment appointment, Long userId, Long categoryId){
+        if(userRepository.existsById(userId)){
+            User user = userRepository.findById(userId).get();
+            appointment.setUser(user);
+        }
+
+        if(categoryRepository.existsById(categoryId)){
+            Category category = categoryRepository.findById(categoryId).get();
+            appointment.setCategory(category);
+        }
+        return appointmentRepository.save(appointment);
     }
 
     public Appointment getAppointment(Long appointmentId){

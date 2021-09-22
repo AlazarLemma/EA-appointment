@@ -54,4 +54,8 @@ public class UserService {
 
         loggerService.log("User registered : " + user);
     }
+
+    public User findByUUID(String uuid) {
+        return userRepository.findByUuid(uuid).orElse(null);
+    }
 }
