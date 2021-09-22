@@ -30,9 +30,11 @@ public class EmailTemplate implements Serializable {
     private String subject;
 
     @Column (name = "email_type")
+    @Enumerated(EnumType.STRING)
     private Type emailType;
 
     @Column (name = "email_status")
+    @Enumerated(EnumType.STRING)
     private EmailStatus status;
 
     public EmailTemplate(String subject, String from, String to, String body, Type emailType){
