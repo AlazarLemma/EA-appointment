@@ -17,8 +17,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/users/client").hasAnyAuthority("ADMIN")
-                .antMatchers("/api/appointments").hasAnyAuthority("PROVIDER", "ADMIN")
+                .antMatchers("/api/users/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/appointments/**").hasAnyAuthority("PROVIDER", "ADMIN")
+                .antMatchers("/api/reservations/**").hasAnyAuthority("PROVIDER", "ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
