@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
-    @Query("SELECT r FROM Reservation  r inner join Appointment a on r.appointment = a WHERE r.reservationStatus = 'ACCEPTED' and a.appointmentTime < :endT and a.appointmentTime >= :startT")
+    @Query("SELECT r FROM Reservation  r inner join Appointment a on r.appointment = a WHERE r.reservationStatus = 'ACCEPTED' and a.startTime < :endT and a.startTime >= :startT")
     List<Reservation> findConfirmedReservationsByTime(LocalDateTime startT, LocalDateTime endT);
 
     @Query("select r from Reservation r where r.reservationStatus = :status and r.appointment = :appointment and r.id = :reservationId")

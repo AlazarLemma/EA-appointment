@@ -19,11 +19,14 @@ public class Appointment implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "time")
-    private LocalDateTime appointmentTime;
-
     @OneToMany
     private Set<Reservation> reservations = new HashSet<>();
+
+    @Column(name = "start_time", nullable = false)
+    private LocalDateTime startTime;
+
+    @Column(name = "end_time", nullable = false)
+    private LocalDateTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")

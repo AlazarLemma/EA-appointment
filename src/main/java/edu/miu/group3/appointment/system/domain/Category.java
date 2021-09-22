@@ -19,11 +19,8 @@ public class Category {
     @Column(name = "title", nullable = false, length = 50)
     private String title;
 
-    @Column(name = "start_time", nullable = false)
-    private LocalDateTime startTime;
-
-    @Column(name = "end_time", nullable = false)
-    private LocalDateTime endTime;
+    @Column(nullable = false)
+    private Integer defaultSessionLength;
 
     @OneToMany
     private Set<Appointment> appointments = new HashSet<>();

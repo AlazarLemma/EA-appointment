@@ -41,8 +41,7 @@ public class CategoryServiceImpl implements CategoryService{
         Optional<Category> currentCategory = categoryRepository.findById(categoryId);
         Optional<Category> result = currentCategory.map(c -> {
             c.setTitle(category.getTitle());
-            c.setStartTime(category.getStartTime());
-            c.setEndTime(category.getEndTime());
+            c.setDefaultSessionLength(category.getDefaultSessionLength());
             return categoryRepository.save(c);
         });
 
