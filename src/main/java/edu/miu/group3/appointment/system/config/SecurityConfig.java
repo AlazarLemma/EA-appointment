@@ -20,6 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/appointments/**").hasAnyAuthority("PROVIDER", "ADMIN")
                 .antMatchers("/api/reservations/**").hasAnyAuthority("PROVIDER", "ADMIN")
+                .antMatchers("/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
