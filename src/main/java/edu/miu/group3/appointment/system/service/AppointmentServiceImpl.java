@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +20,10 @@ import java.util.Optional;
 public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final UserRepository userRepository;
-    private final CategoryRepository categoryRepository; 
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, 
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository,
                                   UserRepository userRepository,
                                   CategoryRepository categoryRepository) {
         this.appointmentRepository = appointmentRepository;
@@ -62,5 +63,10 @@ public class AppointmentServiceImpl implements AppointmentService {
             throw new AppointmentNotFoundException("Appointment with id" + appointmentId + " does not exist");
         }
         appointmentRepository.deleteById(appointmentId);
+    }
+
+    @Override
+    public List<Appointment> getByAppointmentTime(LocalDateTime startT, LocalDateTime endTime) {
+        return appointmentRepository.findByAppointmentTime(startT, endTime);
     }
 }
